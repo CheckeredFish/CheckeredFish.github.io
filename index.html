@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>谷子溢 · Gu Ziyi</title>
+<meta name="description" content="谷子溢 (Gu Ziyi) 的个人主页 — 浙江大学计算机科学与技术专业本科生。Personal homepage of Gu Ziyi, CS undergraduate at Zhejiang University.">
+<style>
+  :root {
+    --bg: #f2f2f2;
+    --fg: #1a1a2e;
+    --muted: #5a5a6e;
+    --accent: #4361ee;
+    --accent-2: #7209b7;
+    --card: #ffffff;
+    --border: #e6e6ee;
+    --shadow: 0 8px 30px rgba(26, 26, 46, 0.10);
+    --radius: 16px;
+    --overlay: rgba(255, 255, 255, 0.68);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12121c;
+      --fg: #eaeaf2;
+      --muted: #9a9ab0;
+      --card: rgba(27, 27, 43, 0.9);
+      --border: #2c2c40;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      --overlay: rgba(10, 12, 20, 0.72);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg) url('bg.jpg') top / cover no-repeat scroll;
+    color: var(--fg);
+    line-height: 1.7;
+    transition: background .3s, color .3s;
+  }
+  body::before {           /* 让照片背景上的文字保持可读 */
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background: var(--overlay);
+  }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(14px);
+    background: color-mix(in srgb, var(--card) 82%, transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 760px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-brand { font-weight: 700; letter-spacing: .5px; text-decoration: none; color: var(--fg); }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; margin-left: 20px; font-size: .92rem;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .lang-btn {
+    margin-left: 20px;
+    background: var(--accent); color: #fff; border: none; cursor: pointer;
+    padding: 4px 12px; border-radius: 999px; font-size: .8rem; font-weight: 600;
+    transition: opacity .2s;
+  }
+  .lang-btn:hover { opacity: .85; }
+
+  /* Hero */
+  .hero { padding: 88px 0 48px; text-align: center; }
+  .avatar {
+    width: 120px; height: 120px; border-radius: 50%;
+    border: 4px solid var(--card);
+    outline: 2px solid var(--accent);
+    object-fit: cover; margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .hero h1 { font-size: 2.4rem; font-weight: 800; }
+  .hero .subtitle {
+    margin-top: 10px; font-size: 1.05rem; color: var(--muted);
+  }
+  .hero .tagline {
+    margin-top: 18px; font-size: 1.02rem; max-width: 560px; margin-inline: auto;
+    color: var(--fg);
+  }
+  .hero-badges { margin-top: 22px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .badge {
+    font-size: .8rem; padding: 5px 14px; border-radius: 999px;
+    background: var(--card); border: 1px solid var(--border); color: var(--muted);
+  }
+
+  /* Sections */
+  section { padding: 56px 0; }
+  .section-title {
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title::before {
+    content: ""; width: 6px; height: 22px; border-radius: 3px;
+    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  }
+  .section-desc { color: var(--muted); font-size: .95rem; margin-bottom: 28px; }
+
+  /* Cards */
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 24px; margin-bottom: 16px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(26,26,46,.14); }
+  .card h3 { font-size: 1.05rem; margin-bottom: 6px; }
+  .card .meta { font-size: .8rem; color: var(--muted); margin-bottom: 10px; }
+  .card p { font-size: .93rem; color: var(--muted); }
+  .card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  .card a:hover { text-decoration: underline; }
+
+  /* Education */
+  .edu-row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .edu-time { font-size: .82rem; color: var(--accent); font-weight: 600; white-space: nowrap; }
+
+  /* Skills */
+  .skill-group { margin-bottom: 20px; }
+  .skill-group:last-child { margin-bottom: 0; }
+  .skill-label {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .74rem; letter-spacing: .1em; color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .skills { display: flex; flex-wrap: wrap; gap: 10px; }
+  .skill {
+    background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+    padding: 7px 18px; font-size: .88rem; transition: all .2s;
+  }
+  .skill:hover {
+    border-color: var(--accent); color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  /* Contact */
+  .contact-links { display: flex; flex-direction: column; gap: 12px; }
+  .contact-row {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 14px 18px; text-decoration: none; color: var(--fg);
+    transition: all .2s;
+  }
+  .contact-row:hover { border-color: var(--accent); transform: translateX(4px); }
+  .contact-row .icon {
+    width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+  }
+  .contact-row .label { font-size: .95rem; font-weight: 600; }
+  .contact-row .value { font-size: .85rem; color: var(--muted); }
+
+  footer { padding: 40px 0 56px; text-align: center; color: var(--muted); font-size: .85rem; }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 560px) {
+    .hero { padding: 64px 0 32px; }
+    .hero h1 { font-size: 1.8rem; }
+    .nav-links a { margin-left: 14px; }
+    .lang-btn { margin-left: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="#">Gu Ziyi</a>
+    <div class="nav-links">
+      <a href="#about" data-zh="关于" data-en="About">关于</a>
+      <a href="#education" data-zh="教育" data-en="Education">教育</a>
+      <a href="#projects" data-zh="项目" data-en="Projects">项目</a>
+      <a href="#skills" data-zh="技能" data-en="Skills">技能</a>
+      <a href="#contact" data-zh="联系" data-en="Contact">联系</a>
+      <button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <img class="avatar" src="https://avatars.githubusercontent.com/u/173875569?v=4" alt="谷子溢">
+    <h1>谷子溢 <span style="color:var(--muted);font-size:1.4rem;">·</span> <span style="font-weight:600;">Gu Ziyi</span></h1>
+    <div class="subtitle" data-zh="浙江大学 · 计算机科学与技术" data-en="Zhejiang University · Computer Science & Technology">
+      浙江大学 · 计算机科学与技术
+    </div>
+    <p class="tagline" data-zh="关注多模态大模型与计算机视觉，喜欢把技术落地到真实场景，持续学习，不断成长。"
+       data-en="Focusing on multimodal large models and computer vision. Love turning technology into real-world solutions, always learning and growing.">
+      关注多模态大模型与计算机视觉，喜欢把技术落地到真实场景，持续学习，不断成长。
+    </p>
+    <div class="hero-badges">
+      <span class="badge" data-zh="2027 届本科生" data-en="Class of 2027">2027 届本科生</span>
+      <span class="badge" data-zh="多模态大模型" data-en="Multimodal LLMs">多模态大模型</span>
+      <span class="badge" data-zh="计算机视觉" data-en="Computer Vision">计算机视觉</span>
+      <span class="badge" data-zh="英语六级" data-en="CET-6">英语六级</span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <section id="about">
+    <h2 class="section-title" data-zh="关于我" data-en="About Me">关于我</h2>
+    <p class="section-desc" data-zh="浙江大学计算机科学与技术专业本科生。" data-en="Undergraduate in Computer Science & Technology at Zhejiang University.">
+      浙江大学计算机科学与技术专业本科生。
+    </p>
+    <div class="card">
+      <p data-zh="具备扎实的计算机基础理论体系，熟悉数据结构与算法、计算机组成、操作系统、计算机网络等核心课程，并有实际的计算机视觉、三维重建及大模型应用项目开发经验。学习能力强，能快速掌握新技术工具，在校期间获校级奖学金及学业标兵荣誉。善于在项目中主动思考、解决问题，具备良好的团队沟通与协作意识。对多模态大模型有浓厚兴趣，期待在挑战性工作中持续成长，为团队创造价值。"
+         data-en="Solid foundation in computer science fundamentals — data structures & algorithms, computer organization, operating systems, computer networks — with hands-on project experience in computer vision, 3D reconstruction and large-model applications. A fast learner who picks up new tools quickly; awarded university scholarships and academic excellence honors. Proactive problem-solver with strong team communication skills and a deep interest in multimodal large models.">
+        具备扎实的计算机基础理论体系，熟悉数据结构与算法、计算机组成、操作系统、计算机网络等核心课程，并有实际的计算机视觉、三维重建及大模型应用项目开发经验。学习能力强，能快速掌握新技术工具，在校期间获校级奖学金及学业标兵荣誉。善于在项目中主动思考、解决问题，具备良好的团队沟通与协作意识。对多模态大模型有浓厚兴趣，期待在挑战性工作中持续成长，为团队创造价值。
+      </p>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2 class="section-title" data-zh="教育背景" data-en="Education">教育背景</h2>
+    <p class="section-desc" data-zh="学历与荣誉。" data-en="Education and honors.">学历与荣誉。</p>
+    <div class="card">
+      <div class="edu-row">
+        <h3 data-zh="浙江大学 · 计算机科学与技术" data-en="Zhejiang University · Computer Science">浙江大学 · 计算机科学与技术</h3>
+        <span class="edu-time">2023.09 – 2027.06</span>
+      </div>
+      <p style="margin-top:4px;" data-zh="学士学位（预计 2027 年毕业）" data-en="Bachelor's degree (expected 2027)">学士学位（预计 2027 年毕业）</p>
+    </div>
+    <div class="card">
+      <h3 data-zh="获奖情况" data-en="Honors & Awards">获奖情况</h3>
+      <p style="margin-top:6px;" data-zh="🏆 浙江大学校三等奖学金"
+         data-en="🏆 Third-class University Scholarship, ZJU">🏆 浙江大学校三等奖学金</p>
+      <p data-zh="⭐ 浙江大学学业优秀标兵"
+         data-en="⭐ Academic Excellence Model Student, ZJU">⭐ 浙江大学学业优秀标兵</p>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2 class="section-title" data-zh="项目经历" data-en="Projects">项目经历</h2>
+    <p class="section-desc" data-zh="参与过的一些项目。" data-en="Selected projects.">参与过的一些项目。</p>
+
+    <div class="card">
+      <h3 data-zh="基于大模型的图像转幻灯片算法研究" data-en="Image-to-Slides Generation via Large Models">基于大模型的图像转幻灯片算法研究</h3>
+      <div class="meta">2026.08 – 至今</div>
+      <p data-zh="利用多模态大模型将图像内容自动转化为结构化的幻灯片，研究视觉理解与版面生成的结合方案。"
+         data-en="Researching how multimodal large models can turn images into structured slides, combining visual understanding with layout generation.">
+        利用多模态大模型将图像内容自动转化为结构化的幻灯片，研究视觉理解与版面生成的结合方案。
+      </p>
+    </div>
+
+    <div class="card">
+      <h3 data-zh="基于双目深度感知的高斯室内重建系统" data-en="Indoor 3D Reconstruction with Binocular Depth & Gaussian Splatting">基于双目深度感知的高斯室内重建系统</h3>
+      <div class="meta">2026.03 – 至今</div>
+      <p data-zh="基于双目视觉的深度感知方案，结合 3D Gaussian Splatting 实现室内场景的高质量三维重建。"
+         data-en="A depth-perception pipeline based on binocular vision, combined with 3D Gaussian Splatting for high-quality indoor scene reconstruction.">
+        基于双目视觉的深度感知方案，结合 3D Gaussian Splatting 实现室内场景的高质量三维重建。
+      </p>
+    </div>
+
+    <div class="card">
+      <h3 data-zh="海马体 MRI 可视化与体积估计" data-en="Hippocampus MRI Visualization & Volume Estimation">海马体 MRI 可视化与体积估计</h3>
+      <div class="meta">2026.02 – 2026.06</div>
+      <p data-zh="针对海马体扫描 nii.gz 医学影像文件，开发可视化图像生成脚本与体积估计算法。"
+         data-en="Developed visualization scripts and a volume-estimation algorithm for hippocampal MRI scans stored in nii.gz format.">
+        针对海马体扫描 nii.gz 医学影像文件，开发可视化图像生成脚本与体积估计算法。
+      </p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2 class="section-title" data-zh="技能" data-en="Skills">技能</h2>
+    <p class="section-desc" data-zh="技术方向与基础课程。" data-en="Technical focus and coursework.">技术方向与基础课程。</p>
+
+    <div class="skill-group">
+      <p class="skill-label" data-zh="编程语言" data-en="PROGRAMMING">编程语言</p>
+      <div class="skills">
+        <span class="skill">C</span>
+        <span class="skill">C++</span>
+        <span class="skill">Python</span>
+        <span class="skill">HTML</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <p class="skill-label" data-zh="技术方向" data-en="FOCUS">技术方向</p>
+      <div class="skills">
+        <span class="skill" data-zh="多模态大模型" data-en="Multimodal LLMs">多模态大模型</span>
+        <span class="skill" data-zh="计算机视觉" data-en="Computer Vision">计算机视觉</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <p class="skill-label" data-zh="核心课程" data-en="CORE COURSES">核心课程</p>
+      <div class="skills">
+        <span class="skill" data-zh="数据结构与算法" data-en="Data Structures & Algorithms">数据结构与算法</span>
+        <span class="skill" data-zh="计算机组成" data-en="Computer Organization">计算机组成</span>
+        <span class="skill" data-zh="操作系统" data-en="Operating Systems">操作系统</span>
+        <span class="skill" data-zh="计算机网络" data-en="Computer Networks">计算机网络</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 class="section-title" data-zh="联系方式" data-en="Contact">联系方式</h2>
+    <p class="section-desc" data-zh="欢迎交流，随时找我。" data-en="Feel free to reach out.">欢迎交流，随时找我。</p>
+    <div class="contact-links">
+      <a class="contact-row" href="https://github.com/CheckeredFish" target="_blank" rel="noopener">
+        <div class="icon">GH</div>
+        <div>
+          <div class="label" data-zh="GitHub" data-en="GitHub">GitHub</div>
+          <div class="value">@CheckeredFish</div>
+        </div>
+      </a>
+      <a class="contact-row" href="mailto:voki123277@163.com">
+        <div class="icon">@</div>
+        <div>
+          <div class="label" data-zh="邮箱" data-en="Email">邮箱</div>
+          <div class="value">voki123277@163.com</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p data-zh="© 2026 谷子溢 · 用 与 GitHub Pages 制作"
+       data-en="© 2026 Gu Ziyi · Built with ♥ and GitHub Pages">
+      © 2026 谷子溢 · 用 ♥ 与 GitHub Pages 制作
+    </p>
+    <p><a href="https://github.com/CheckeredFish/CheckeredFish.github.io" target="_blank" rel="noopener" data-zh="源码" data-en="Source">源码</a></p>
+  </div>
+</footer>
+
+<script>
+  function toggleLang() {
+    const btn = document.getElementById('langBtn');
+    const isEn = btn.textContent === 'EN';
+    document.documentElement.lang = isEn ? 'en' : 'zh-CN';
+    document.querySelectorAll('[data-zh], [data-en]').forEach(el => {
+      el.textContent = isEn ? el.dataset.en : el.dataset.zh;
+    });
+    btn.textContent = isEn ? '中' : 'EN';
+  }
+</script>
+</body>
+</html>
